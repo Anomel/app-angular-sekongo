@@ -20,7 +20,7 @@ export class AssignmentsService {
   }
 
   url = 'http://localhost:8010/api/assignments';
-  //url = 'https://apimbds2022.herokuapp.com/api/assignments';
+  // url = 'https://apisekongodelphin2022.herokuapp.com/api/assignments';
 
   getAssignments(page:number, limit:number): Observable<any> {
     //return of(this.assignments);

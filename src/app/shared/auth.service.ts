@@ -5,11 +5,28 @@ import { Injectable } from '@angular/core';
 })
 export class AuthService {
   loggedIn = false;
+  user: { name: string; admin: boolean; pwd: string }[] = [
+    {name: '', pwd: '', admin: false}
+  ];
+  users: Array<{name: string, pwd: string, admin: boolean}> = [
+    {name: 'sekongo', pwd: 'azerty', admin: true},
+    {name: 'sekongo2', pwd: 'azerty', admin: false},
+  ];
 
   constructor() { }
 
-  logIn() {
+  // @ts-ignore
+  logIn(name, pwd) {
     // devrait prendre un login et un password en paramètres...
+    for (let i = 0; i < this.users.length; i++ ) {
+      // tslint:disable-next-line:triple-equals
+      if (this.users[i].name == name && this.users[i].pwd == pwd) {
+        this.loggedIn = true;
+        this.user[0].name = name;
+        this.user[0].pwd = this.users[i].pwd;
+        return true;
+      }
+    }
     this.loggedIn = true;
   }
 

@@ -1,85 +1,27 @@
-<main class="container">
-  <div class="ajouterBtn">
-    <a routerLink="/add">
-      <button mat-flat-button color="accent">
-        Ajouter assignment
-      </button>
-    </a>
-  </div>
-  <div>
-<label>Nb assignments par page :</label>
-<input type="range" min=5 max="100"  [(ngModel)]="limit"
-       (change)="getAssignments()"> {{limit}}
-      </div>
-<div class="pagination">
-  <button mat-stroked-button color="basic" (click)="premierePage()" [disabled]="page===1">Première Page</button>
-  <button mat-stroked-button color="basic" (click)="pagePrecedente()" [disabled]="!hasPrevPage">Page Précédente</button>
-  <button mat-stroked-button color="basic" (click)="pageSuivante()" [disabled]="!hasNextPage">Page Suivante</button>
-  <button mat-stroked-button color="basic" (click)="dernierePage()"
-          [disabled]="page===totalPages"
-  >
-      Dernière Page
-</button>
+<br>
+<br>
+<div class="row">
+  <form ngForm #loginForm (submit)="login();">
+    <div class="col-md-12">
+      <mat-card align="center" style="background-color: bisque">Nombre de assignments: <b>{{totalDocs}}</b></mat-card>
+      <mat-card *ngIf="authService.loggedIn" align="center" style="background-color: green">Vous êtes connectés</mat-card>
+      <mat-card *ngIf="!authService.loggedIn" align="center"><b>Authentification</b></mat-card>
+      <mat-card *ngIf="!authService.loggedIn" align="center" style="border: aqua">
+        <mat-form-field>
+          <input matInput placeholder="Nom utilisateur" [(ngModel)]="name" name="name">
+        </mat-form-field>
+        <br>
+        <br>
+        <mat-form-field>
+          <input matInput type="password" placeholder="Mot de passe" [(ngModel)]="pwd" name="pwd">
+        </mat-form-field>
+        <br>
+        <br>
+        <br>
+        <button mat-stroked-button color="primary">
+          Se connecter
+        </button>
+      </mat-card>
+    </div>
+  </form>
 </div>
-<p>Nombre de page total : {{totalPages}},
-Nombre d'assignments : {{totalDocs}},
-Page courante : {{page}},
-Nb d'assignments par page : {{limit}}</p>
-
-<table mat-table [dataSource]="assignments" class="mat-elevation-z8">
-
-  <!--- Note that these columns can be defined in any order.
-        The actual rendered columns are set as a property on the row definition" -->
-
-         <!-- id Column -->
-  <ng-container matColumnDef="id">
-    <th mat-header-cell *matHeaderCellDef> Id </th>
-    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-  </ng-container>
-
-  <!-- Nom Column -->
-  <ng-container matColumnDef="nom">
-    <th mat-header-cell *matHeaderCellDef> Nom </th>
-    <td mat-cell *matCellDef="let element"> {{element.nom}} </td>
-  </ng-container>
-
-
-  <!-- date de rendu Column -->
-  <ng-container matColumnDef="dateDeRendu">
-    <th mat-header-cell *matHeaderCellDef> Date de rendu </th>
-    <td mat-cell *matCellDef="let element"> {{element.dateDeRendu | date}} </td>
-  </ng-container>
-
-  <!-- Rendu Column -->
-  <ng-container matColumnDef="rendu">
-    <th mat-header-cell *matHeaderCellDef> Rendu </th>
-    <td mat-cell *matCellDef="let element"> {{element.rendu}} </td>
-  </ng-container>
-
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
-
-
-
-
-
-
-  <mat-list *ngFor="let assignment of assignments; let i=index">
-    <nav>
-      <a routerLink="/assignment/{{assignment.id}}">
-        <h3 mat-subheader>{{assignment.dateDeRendu | date}}</h3>
-        <mat-list-item>
-          <p *ngIf="assignment.rendu; else nonsoumis" appRendu>
-            {{assignment.nom}} a été rendu.
-          </p>
-
-          <ng-template #nonsoumis>
-            <p>{{assignment.nom}} n'a pas été rendu !</p>
-          </ng-template>
-          <mat-divider></mat-divider>
-        </mat-list-item>
-      </a>
-    </nav>
-  </mat-list>
-</main>

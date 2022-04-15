@@ -22,12 +22,17 @@ import { HttpClientModule } from '@angular/common/http';
 import { AssignmentsComponent } from './assignments/assignments.component';
 import { RenduDirective } from './shared/rendu.directive';
 import { AssignmentDetailComponent } from './assignments/assignment-detail/assignment-detail.component';
-import { AddAssignmentComponent } from './assignments/add-assignment/add-assignment.component';
 
 // Pour le router
 import { Routes, RouterModule } from '@angular/router';
 import { EditAssignmentComponent } from './edit-assignment/edit-assignment.component';
 import { AuthGuard } from './shared/auth.guard';
+import {MatToolbarModule} from "@angular/material/toolbar";
+import { ListAssignmentsComponent } from './assignments/list-assignments/list-assignments.component';
+import {AddAssignmentComponent} from "./assignments/add-assignment/add-assignment.component";
+import {MatMenuModule} from "@angular/material/menu";
+import {MatSelectModule} from "@angular/material/select";
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
 
 const routes:Routes = [
   {
@@ -50,6 +55,10 @@ const routes:Routes = [
     path: "assignment/:id/edit",
     component:EditAssignmentComponent,
     canActivate:[AuthGuard]
+  },
+  {
+    path: "list-assignments",
+    component: ListAssignmentsComponent
   }
 ]
 @NgModule({
@@ -59,7 +68,8 @@ const routes:Routes = [
     RenduDirective,
     AssignmentDetailComponent,
     AddAssignmentComponent,
-    EditAssignmentComponent
+    EditAssignmentComponent,
+    ListAssignmentsComponent
   ],
   imports: [
     BrowserModule,
@@ -68,7 +78,7 @@ const routes:Routes = [
     FormsModule, MatInputModule, MatFormFieldModule, MatDatepickerModule,
     MatListModule, MatCardModule, MatCheckboxModule, MatTableModule,
     MatNativeDateModule, MatSlideToggleModule, HttpClientModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes), MatToolbarModule, MatMenuModule, MatSelectModule, MatButtonToggleModule
   ],
   providers: [],
   bootstrap: [AppComponent]

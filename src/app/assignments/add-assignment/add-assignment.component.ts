@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AssignmentsService } from 'src/app/shared/assignments.service';
 import { Assignment } from '../assignment.model';
+import {AuthService} from "../../shared/auth.service";
 
 @Component({
   selector: 'app-add-assignment',
@@ -14,9 +15,14 @@ export class AddAssignmentComponent implements OnInit {
  dateDeRenduAssignment!:Date;
 
   constructor(private assignmentsService:AssignmentsService,
-              private router:Router) { }
+              private router:Router,
+              public authService: AuthService
+  ) { }
 
   ngOnInit(): void {
+    if (!this.authService.loggedIn) {
+      this.router.navigate(['/']);
+    }
   }
 
   onSubmit() {

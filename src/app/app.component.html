@@ -1,11 +1,23 @@
+
+<div class="row">
+  <button mat-button [matMenuTriggerFor]="menu">Choisir une action</button>
+  <mat-menu style="background-color: bisque" #menu="matMenu">
+    <button mat-menu-item><a routerLink="list-assignments">Liste des assignments</a></button>
+    <button mat-menu-item><a routerLink="add">Ajouter assignment</a></button>
+  </mat-menu>
+</div>
+
 <h1>
-  <nav>
+  <nav align="center">
     <a routerLink="/home">Application de gestion des assignments</a>&nbsp;
   </nav>
 </h1>
-<mat-slide-toggle color="primary" (click)="login()">Login</mat-slide-toggle>
-<br>
-<button mat-raised-button color="primary" (click)="peuplerBD()">Peuplet BD</button>
+
+<div class="row" align="center">
+  <mat-button-toggle *ngIf="authService.loggedIn" color="primary" (click)="logout()">Se déconnecter</mat-button-toggle>
+  <br>
+  <button mat-raised-button *ngIf="authService.loggedIn" color="primary" (click)="peuplerBD()">Peuplet BD</button>
+</div>
 <!--
   La ligne suivante permet d'afficher le composant qui correspond à l'URL (en fonction des routes)
 -->

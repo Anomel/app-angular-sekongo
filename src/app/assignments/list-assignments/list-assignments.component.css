@@ -39,10 +39,3 @@
 .mat-row:hover .mat-cell {
   border-color: currentColor;
 }
-
-#bottom {
-  display:flex;
-  justify-content: space-between;
-  align-items: flex-end;
-}
-

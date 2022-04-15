@@ -11,14 +11,16 @@ import { AuthService } from './shared/auth.service';
 
 export class AppComponent {
   title = 'Première application angular sur heroku';
+  name = "";
+  pwd = "";
 
-  constructor(private authService:AuthService,
+  constructor(public authService:AuthService,
     private router:Router,
     private assignmentsService:AssignmentsService) {}
 
   login() {
     if(!this.authService.loggedIn) {
-      this.authService.logIn();
+      this.authService.logIn(this.name, this.pwd);
     } else {
       this.authService.logOut();
       this.router.navigate(["/home"]);
@@ -32,5 +34,14 @@ export class AppComponent {
       // on peut alors afficher la liste
       this.router.navigate(["/home"]);
     })
+  }
+
+  navigueTo(event: MouseEvent) {
+    this.router.navigate(['/']);
+  }
+
+  logout() {
+    this.authService.logOut();
+    this.router.navigate(["/home"]);
   }
 }

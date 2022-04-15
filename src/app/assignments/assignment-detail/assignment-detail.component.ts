@@ -18,6 +18,11 @@ export class AssignmentDetailComponent implements OnInit {
               private authService:AuthService) {}
 
   ngOnInit(): void {
+
+    if (!this.authService.loggedIn) {
+      this.router.navigate(['/']);
+    }
+
     // le + force la conversion "string" vers "number"
     const id:number = +this.route.snapshot.params['id'];
 

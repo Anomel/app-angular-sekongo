@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AssignmentsService } from '../shared/assignments.service';
 import { Assignment } from './assignment.model';
+import {AuthService} from "../shared/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-assignments',
@@ -22,10 +24,13 @@ export class AssignmentsComponent implements OnInit {
   hasNextPage?: boolean;
   nextPage?: number;
 
+  name = "";
+  pwd = "";
 
-  constructor(private assignmentsService: AssignmentsService) {
-    //console.log("dans le constructeur")
-  }
+
+  constructor(public authService:AuthService,
+              private router:Router,
+              private assignmentsService:AssignmentsService) {}
 
   // appelé avant l'affichage
   ngOnInit(): void {
@@ -73,5 +78,23 @@ export class AssignmentsComponent implements OnInit {
   dernierePage() {
     this.page = this.totalPages;
     this.getAssignments();
+  }
+
+  login() {
+    if(!this.authService.loggedIn) {
+      this.authService.logIn(this.name, this.pwd);
+    } else {
+      this.authService.logOut();
+      this.router.navigate(["/"]);
+    }
+  }
+
+  peuplerBD() {
+    this.assignmentsService.peuplerBDAvecForkJoin()
+      .subscribe(() => {
+        console.log("TOUS LES AJOUTS ONT ETE REALISES");
+        // on peut alors afficher la liste
+        this.router.navigate(["/home"]);
+      })
   }
 }
